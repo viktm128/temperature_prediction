@@ -17,13 +17,18 @@ def server(input, output, session):
     @output
     @render_widget
     def time_series_plot():
-        year = df.loc[0, 1]
-        dr = pd.date_range(start = '1/1/1961', end='12/1/2013', freq='MS')
-        ts = df.loc[0, 5:640]
+        row_num = int(input.station_name())
+        
+        ts = df.loc[row_num,:]
+        ts = ts.loc[max(5, ts.first_valid_index()):ts.last_valid_index()]
+        
+        dr = pd.date_range(start = '1/15/' + str(df.loc[row_num, 1]), periods=len(ts), freq='MS') + pd.DateOffset(days=14)
         ts.index = dr
 
-        return (ts[ts != -9999] / 100).plot()
-
+        return (ts[ts != -9999] / 100).plot(
+            title="Temperature at " + df.loc[row_num, 0],
+            labels=dict(index="time", value="degrees")
+        )
 
 
 app = App(app_ui, server)
