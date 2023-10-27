@@ -1,0 +1,8 @@
+numpy=1.26.1
+pandas=2.1.2
+matplotlib=3.8.0
+tensorflow=2.14.0
+shiny=0.5.1
+shinywidgets=0.2.1
+plotly=5.18.0
+ipyleaflet=0.17.4
